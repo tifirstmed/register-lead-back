@@ -16,6 +16,9 @@ router.post('/lead-register', async (req, res) => {
 
   try {
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
+    console.log(
+      `Lead por registrar,  id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate} ,producto:${producto}`
+    );
 
     const [result] = await pool.execute(
       'INSERT INTO leads (id, nombres, apellidos, celular, correo, descripcion, fecha, producto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
