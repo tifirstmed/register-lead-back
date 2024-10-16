@@ -50,8 +50,4 @@ router.post('/lead-register', async (req, res) => {
   }
 });
 
-router.get('/click', (req, res) => {
-  res.json({ message: 'Endpoint alcanzado correctamente.' });
-});
-
 module.exports = router;
