@@ -14,13 +14,16 @@ router.post('/lead-register', async (req, res) => {
       .json({ message: 'Todos los campos son obligatorios.' });
   }
 
+  let connection; // Declarar la conexión aquí
+
   try {
+    connection = await pool.getConnection(); // Obtener una conexión del pool
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
     console.log(
-      `Lead por registrar,  id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate} ,producto:${producto}`
+      `Lead por registrar, id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate}, producto:${producto}`
     );
 
-    const [result] = await pool.execute(
+    const [result] = await connection.execute(
       'INSERT INTO leads (id, nombres, apellidos, celular, correo, descripcion, fecha, producto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [
         id,
@@ -40,6 +43,10 @@ router.post('/lead-register', async (req, res) => {
   } catch (error) {
     console.error('Error al insertar los datos', error);
     res.status(500).json({ message: 'Error en el servidor' });
+  } finally {
+    if (connection) {
+      connection.release(); // Liberar la conexión de vuelta al pool
+    }
   }
 });
 
