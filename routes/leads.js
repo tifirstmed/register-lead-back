@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../models/dataModel');
-const { formatDateToPeruTime } = require('../utils/dateUtils'); // Mover la lógica de fecha a un helper
+const { formatDateToPeruTime } = require('../utils/dateUtils');
 
 // Ruta para agregar un cliente
 router.post('/lead-register', async (req, res) => {
@@ -61,10 +61,10 @@ router.post('/lead-register-tiktok', async (req, res) => {
       .json({ message: 'Todos los campos son obligatorios.' });
   }
 
-  let connection; // Declarar la conexión aquí
+  let connection;
 
   try {
-    connection = await pool.getConnection(); // Obtener una conexión del pool
+    connection = await pool.getConnection();
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
     console.log(
       `Lead tiktok por registrar, id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate}, producto:${producto}`
