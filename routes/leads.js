@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../models/dataModel');
 const { formatDateToPeruTime } = require('../utils/dateUtils');
-const { hourToPeru } = require('../utils/hourUtil');
+const { getPeruTimeOnly } = require('../utils/hourUtil');
 
 // Ruta para agregar un cliente de meta
 router.post('/lead-register', async (req, res) => {
@@ -20,7 +20,7 @@ router.post('/lead-register', async (req, res) => {
   try {
     connection = await pool.getConnection(); // Obtener una conexión del pool
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
-    const formattedHour = hourToPeru(); // Obtener la hora formateada
+    const formattedHour = getPeruTimeOnly(); // Obtener la hora formateada
     console.log(
       `Lead por registrar, id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate}, hora:${formattedHour}, producto:${producto}`
     );
@@ -69,7 +69,7 @@ router.post('/lead-register-tiktok', async (req, res) => {
   try {
     connection = await pool.getConnection();
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
-    const formattedHour = hourToPeru(); // Obtener la hora formateada
+    const formattedHour = getPeruTimeOnly(); // Obtener la hora formateada
     console.log(
       `Lead tiktok por registrar, id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate}, hora:${formattedHour}, producto:${producto}`
     );
@@ -118,7 +118,7 @@ router.post('/lead-register-organico', async (req, res) => {
   try {
     connection = await pool.getConnection();
     const formattedDate = formatDateToPeruTime(); // Mover lógica de fecha a un helper
-    const formattedHour = hourToPeru(); // Obtener la hora formateada
+    const formattedHour = getPeruTimeOnly(); // Obtener la hora formateada
     console.log(
       `Lead tiktok por registrar, id:${id}, nombres:${nombres}, apellidos:${apellidos}, celular:${celular}, correo:${correo}, descripcion:${descripcion}, fecha:${formattedDate}, hora:${formattedHour}, producto:${producto}`
     );
